@@ -21,7 +21,7 @@ export class Modal extends Component<IModalWindow> {
 
         this._closeButton.addEventListener('click', this.closeModalWindow.bind(this));
         this._content.addEventListener('click', (event) => event.stopPropagation());
-        this.container.addEventListener('click', this.closeModalWindow.bind(this));
+        this.container.addEventListener('click', this.closeModalWindow  .bind(this));
     }
 
     closeModalWindow() {

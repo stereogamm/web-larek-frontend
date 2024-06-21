@@ -6,7 +6,7 @@ import { IItem, IDataHandler, IOrder, IFormErrors, ValidateAdress } from "../typ
 export class DataHandler extends Model<IDataHandler> {
     productList: IItem[] = [];
     basketList: IItem[] = [];
-    preview: string; 
+    preview: IItem; 
     total: number | null;
     order: IOrder = {
         email: '',
@@ -114,11 +114,17 @@ export class DataHandler extends Model<IDataHandler> {
             } 
         }
 
-    setPreview(item: IItem){
-            this.preview = item.id;
-            this.emitChanges('preview:changed', item);
-        }    
+    setPreview(id: string){
+            const cardItem = this.showOneItem(id)
+            this.preview = cardItem;
+            this.emitChanges('preview:changed');
+        }  
+        
+    getPreview() {
+        return this.preview;
     }
+
+}
 
 
 

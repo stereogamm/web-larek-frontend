@@ -5,7 +5,7 @@ import { AppApi} from './components/AppApi';
 import { API_URL, CDN_URL, options, colorSetting} from './utils/constants';
 import { Component } from './components/base/component';
 import { Page } from './components/Page'
-import { Card, ICardActions, ICard } from './components/Card';
+import { Card, ICard } from './components/Card';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { Modal } from './components/Modal';
 import { Basket } from './components/Basket';
@@ -35,7 +35,7 @@ const cardInBasket = ensureElement<HTMLTemplateElement>("#card-basket");
 const adressPaymentTemplate = ensureElement<HTMLTemplateElement>("#order");
 const contactsFormTemplate = ensureElement<HTMLTemplateElement>('#contacts');
 const successOrderTemplate = ensureElement<HTMLTemplateElement>('#success');
-
+const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 
 const basketComponent = new Basket(cloneTemplate(basket), events);
 const paymentAddressForm = new PaymentAddressForm(cloneTemplate(adressPaymentTemplate), events);
@@ -59,19 +59,16 @@ api.getItems()
     console.error('Error:', error);
   });
 
-
+//ВЫВОД КАРТОЧЕК НА ГЛАВНОЙ СТРАНИЦЕ
 events.on('Info: loaded', () => {
     dataHandler.productList.forEach(item => {
-        const card = new Card('card', cloneTemplate(cardTemplate), {
-            onClick: () => events.emit('card:select', item)
-        });
-        const category: string = item.category
-        card.categoryColor(colorSetting[item.category as keyof typeof colorSetting]);
+        const card = new Card('card', cloneTemplate(cardTemplate), events)
+      
         const catalog = card.render({
             title: item.title,
             image: item.image,
             price: item.price,
-            text: item.description,
+            description: item.description,
             category: item.category,
             id: item.id,
         });
@@ -231,44 +228,40 @@ events.on('Info: loaded', () => {
 // });
  
 
-//ТЕСТ ПРЕВЬЮ КАРТОЧКИ ПО КЛИКУ 
-events.on('card:select', () => {
-    const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
-    const card = new Card ('card', cloneTemplate(cardPreviewTemplate));
+//ПРЕВЬЮ КАРТОЧКИ ПО КЛИКУ 
+events.on('card:selected', (data: {id: string}) => {
+    dataHandler.setPreview(data.id)
+})
 
-   
-    const item = dataHandler.showOneItem('412bcf81-7e75-4e70-bdb9-d3c73c9803b7');
-    console.log("one item", item)
-    // const category: string = card.category
-    // card.categoryColor(colorSetting[item.category as keyof typeof colorSetting]);
+events.on('preview:changed', () => {
+    
+    const card = new Card ('card', cloneTemplate(cardPreviewTemplate), events);
+    const preview = dataHandler.getPreview();
+
+    
     const cardElement = card.render({
-        text: item.description,
-        image: item.image,
-        title: item.title,
-        category: item.category,
-        price: item.price,
-        id: item.id
+        description: preview.description,
+        image: preview.image,
+        title: preview.title,
+        category: preview.category,
+        price: preview.price,
+        id: preview.id
     })
+
     modal.render({content: cardElement});
 })
 
 
-// ТЕСТ ВЫВОДА КАРТОЧЕК НА ГЛАВНОЙ СТРАНИЦЕ
-//выбрали элементы для отображения карточки
 
-// testDataArray.items.forEach(item => {
-//     const card = new Card('card', cloneTemplate(cardTemplate), actions);
-//     const category: string = item.category
-//     card.categoryColor(colorSetting[item.category as keyof typeof colorSetting]);
-//     const catalog = card.render({
-//         title: item.title,
-//         image: item.image,
-//         price: item.price,
-//         text: item.description,
-//         category: item.category,
-//     });
-//     gallery.appendChild(catalog);
-// })
+
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ТЕСТИРОВАНИЕ МОДЕЛЕЙ ДАННЫХ

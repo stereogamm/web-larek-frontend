@@ -30,7 +30,7 @@ export interface IDataHandler {
     productList: IItem[];
     basket: IItem[];
     order: IOrder;
-    preview: string | null; //id открытой карточки
+    preview: string; //id открытой карточки
     saveProductList(items : IItem[]): void;// сохранение списка продуктов, полученных с сервера
     addItemToBasket(item: string, payload: Function | null): void; //добавляем товар по id в корзину
     deleteItemFromBasket(item: string, payload: Function | null): void; //удаляем товар по id из корзины

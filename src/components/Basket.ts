@@ -43,4 +43,5 @@ export class Basket extends Component<IBasket> {
         this.setText(this._total, total);
     }
 
+
 }
