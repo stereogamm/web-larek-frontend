@@ -165,28 +165,43 @@ export type IPopupItemInBacket = Pick<IItem, 'title' | 'price'>
 
 # Слой данных
 
-### класс `ItemsData`
+### класс `DataHandler`
 
 Отвечает за данные и логику работы с данными товаров\
-Функция-конструктор принимает инстанс брокера событий\
 
-- `constructor(events: IEvents): void`
-
-Содержит поля: 
-
-- `_items: IItem[];` хранит массив карточек
-- `_preview: string | null;` id открытой для просмотра карточки
-- `events: IEvents;` экземпляр класса EventEmitter для генерации событий при изменении данных (хранится в каждом классе)
+Содержит поля:\
+- productList: IItem[]  список объектов карточек для отображения на главной\ 
+- basketList: IItem[]   список объектов товаров корзины\
+- preview: IItem объект открытой карточки для превью\       
+- total: number | null  общая стоимость всех товаров\
+- order: IOrder = { объект заказа\ 
+        email: '',\
+        phone: '',\
+        address: '',\
+        payment: '',\
+        items: [],\
+        total: 0\
+    };
+- formErrors: IFormErrors = {} объект ошибок валидации формы
 
 Методы класса для взаимодействия с данными: 
 
-- `addItemToBasket(item: string, payload: Function | null): void;` добавляем товар по id в корзину
-- `deleteItemFromBasket(item: string, payload: Function | null): void;`  удаляем товар по id из корзины
-- `returnOneItem(items: IItem[], id: string): IItem;`  возвращает объект открытой карточки для просмотра по id 
-<!-- - `getItems(): IItem[];`  получаем массив карточек с сервера -->
-<!-- - `saveItems(): IItem[];`  сохраняем массив карточек -->
-- `функции get(), set();`  для доступа и работы со свойствами объекта-инстанса этого класса
-- 
+- setProductList(items: IItem[]) присваивает полученные с сервера данные в ProductList
+- showOneItem(id: string) возвращает объект открытой карточки для просмотра по id
+- addItemtoBasket(item: IItem) добавление товара в корзину
+- removeItemFromBasket(id: string) удаление товара из корзины
+- resetBasket() очищает корзину
+- getTotalSum() рассчитывает общую сумму всех товаров 
+- getCountBasketItems() возвращает количество товаров в корзине для дальнейшего отображения счетчика на главной
+- validationOrderInfoIsChecked() проверка на заполненность полей данными о способе оплаты и адресе
+- validationUserInfoIsChecked() проверка на заполенность полей данными о емейле и телефоне
+- setOrder() добавление id продукта в поле заказа
+- setPreview(id: string) сохраняет в поле id открытой карточки
+- getPreview() получает id открытой карточки
+- getBasketList() получает список товаров корзины
+- setPaymentType (value: string) сохраняет выбранный тип оплаты
+
+
 ### класс `UserData`
 
 Отвечает за данные пользователя и логику работы с ними\

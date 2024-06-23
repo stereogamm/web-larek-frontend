@@ -41,7 +41,7 @@ export class Form<T> extends Component<IInputsValidate> {
         this._submit.disabled = !isValid;
     }
 
-    set errors(value: string[]) {
+    set errors(value: string) {
         this.setText(this._errors, value);
     }
 

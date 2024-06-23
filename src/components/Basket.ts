@@ -1,4 +1,4 @@
-import { ensureElement, createElement } from "../utils/utils";
+import { ensureElement, createElement,  } from "../utils/utils";
 import { Component } from "./base/component";
 import { IEvents } from "./base/events";
 
@@ -18,13 +18,11 @@ export class Basket extends Component<IBasket> {
   
         this._list = ensureElement<HTMLElement>('.basket__list', this.container);
         this._total = this.container.querySelector('.basket__price');
-
         this._button = this.container.querySelector('.basket__button');
   
         if (this._button) {
             this._button.addEventListener('click', () => {
-                console.log('order click')
-                events.emit('order:open');
+                events.emit('orderItems:added');
             });
         }
     }
@@ -32,16 +30,16 @@ export class Basket extends Component<IBasket> {
     set items(items: HTMLElement[]) {
         if (items.length) {
             this._list.replaceChildren(...items);
+            this.setDisabled(this._button, false);
         } else {
             this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {
-                textContent: 'Корзина пуста'
+                textContent: 'В корзине пока нет выбранных товаров'
             }));
+            this.setDisabled(this._button, true);
         }
     }
 
     set total(total: number) {
-        this.setText(this._total, total);
+        this.setText(this._total, `${(total)} синапсов`);
     }
-
-
 }

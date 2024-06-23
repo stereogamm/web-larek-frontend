@@ -63,9 +63,9 @@ export type IFormErrors = Partial<Record<keyof IOrder, string>>;
 // //тип данных для модального окна с данными пользователя
 // export type IDataUserPopup = Pick<IUserData, 'email' | 'phone'>;
 
-export type ValidateAdress = Pick<IOrder,  'address' | 'payment'>
+export type TOrderForm = Pick<IOrder,  'address' | 'payment' | 'email' | 'phone'>
 
-export type ValidatePhone = Pick<IOrder, 'email' | 'phone' >
+
 
 //тип данных для модального окна успешного завершения заказа
 export type OrderSuccessPopup = Pick<IOrder, 'total'>;

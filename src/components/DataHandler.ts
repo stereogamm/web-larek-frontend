@@ -1,6 +1,6 @@
 import { Model } from "./base/model";
 import { IEvents, EventEmitter } from './base/events'
-import { IItem, IDataHandler, IOrder, IFormErrors, ValidateAdress } from "../types/index"
+import { IItem, IDataHandler, IOrder, IFormErrors, TOrderForm } from "../types/index"
 
 
 export class DataHandler extends Model<IDataHandler> {
@@ -18,7 +18,6 @@ export class DataHandler extends Model<IDataHandler> {
     };
     formErrors: IFormErrors = {};
 
-
     setProductList(items: IItem[]) {
         this.productList = items
         this.emitChanges('itemsData:changed', { productList: this.productList}); //Метод emitChanges уведомляет всех подписчиков о том, что список продуктов был изменен, передавая новое значение productList
@@ -32,13 +31,13 @@ export class DataHandler extends Model<IDataHandler> {
     //добавление товара в корзину
     addItemtoBasket(item: IItem) {
         this.basketList.push(item)
-        this.emitChanges('basketData:changed',{basketList: this.basketList} );
+        this.emitChanges('basketData:changed', {basketList: this.basketList} );
     }
         
     //удаление товара из корзины
     removeItemFromBasket(id: string) {
         this.basketList = this.basketList.filter(item => item.id !== id);
-        this.emitChanges('basketData:changed',{basketList: this.basketList} );
+        this.emitChanges('basketData:changed', {basketList: this.basketList} );
     }  
 
 
@@ -47,12 +46,23 @@ export class DataHandler extends Model<IDataHandler> {
         this.emitChanges('basketData:changed', this.basketList);
     }
 
+    resetOrder() {
+        this.order.payment = 'card';
+        this.order.address = '';
+        this.order.email = '';
+        this.order.phone = '';
+    }
+
     getTotalSum(): number { //рассчитывает общую сумму всех товаров 
         let sum = 0;
         this.basketList.forEach((item) => {
             sum += item.price;
         })
         return sum;
+    }
+
+    set _total(value : number) {
+        this.total = value;
     }
 
     getCountBasketItems(): number {
@@ -72,7 +82,7 @@ export class DataHandler extends Model<IDataHandler> {
 		}
 		
 		this.formErrors = errors; //Ошибки валидации сохраняются в свойство this.formErrors. Теперь this.formErrors содержит все ошибки, найденные в процессе проверки
-		this.events.emit('form-payment:validation', this.formErrors); //Событие form-payment:validation отправляется с объектом this.formErrors в качестве аргумента. Это событие обрабатывается в другой части приложения для отображения ошибок пользователю
+		this.events.emit('formErrors:change', this.formErrors); //Событие form-payment:validation отправляется с объектом this.formErrors в качестве аргумента. Это событие обрабатывается в другой части приложения для отображения ошибок пользователю
 
 		return Object.keys(errors).length === 0; //возвращает количество ключей в объекте errors, и если это значение равно нулю, то ошибок нет
 	}
@@ -89,17 +99,13 @@ export class DataHandler extends Model<IDataHandler> {
         }
 
         this.formErrors = errors;
-        this.events.emit('form-userdata:validation', this.formErrors);
+        this.events.emit('formErrors:change', this.formErrors);
 
         return Object.keys(errors).length === 0;
     }
     
-    setOrderFields(fields: Partial<ValidateAdress>): void {
-        // Проход по всем переданным полям и установка их значений в объекте order
-        Object.keys(fields).forEach((field) => {
-            const key = field as keyof ValidateAdress;
-            this.order[key] = fields[key]!;
-        });
+    setOrderFields(field: keyof TOrderForm , value: string) {
+        this.order[field] = value;
 
         // Проверка наличия всех необходимых данных и отправка события, если они есть
         if (this.validationOrderInfoIsChecked() && this.validationUserInfoIsChecked()) {
@@ -111,6 +117,7 @@ export class DataHandler extends Model<IDataHandler> {
     setOrder() {
             if(this.basketList.length !== 0) {
                 this.order.items = this.basketList.map(item => item.id);
+                this.emitChanges('datapaymentform:opened');
             } 
         }
 
@@ -123,7 +130,19 @@ export class DataHandler extends Model<IDataHandler> {
     getPreview() {
         return this.preview;
     }
+    
+    getBasketList(): IItem[] {
+        return this.basketList;
+    }
 
+    setPaymentType (value: string) {
+        this.order.payment = value;
+        this.emitChanges('paymentType:buttonSelected', {payment: this.payment})
+    }
+    
+    get payment() {
+        return this.order.payment
+    }
 }
 
 

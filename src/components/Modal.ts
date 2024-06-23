@@ -21,13 +21,17 @@ export class Modal extends Component<IModalWindow> {
 
         this._closeButton.addEventListener('click', this.closeModalWindow.bind(this));
         this._content.addEventListener('click', (event) => event.stopPropagation());
-        this.container.addEventListener('click', this.closeModalWindow  .bind(this));
+        this.container.addEventListener('click', this.closeModalWindow.bind(this));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                this.closeModalWindow();
+            }
+        });
     }
 
     closeModalWindow() {
         this.container.classList.remove('modal_active');
         this.events.emit('modal:close');
-        this.content = null;
     }
 
     set content(value: HTMLElement) {
@@ -37,6 +41,12 @@ export class Modal extends Component<IModalWindow> {
     openModalWindow() {
         this.container.classList.add('modal_active');
         this.events.emit('modal:open');
+    }
+
+    resetFormFields() {
+        if (this._content instanceof HTMLFormElement) {
+            this._content.reset();
+        }
     }
 
     render(data: IModalWindow): HTMLElement {

@@ -28,7 +28,8 @@ export class Card extends Component<ICard> {
     protected _button: HTMLButtonElement;
     protected _itemNumber?: HTMLElement;
     protected _id: string;
-    protected event?: IEvents
+    protected event?: IEvents;
+    protected _deleteButton?: HTMLButtonElement;
     
 
     constructor(protected blockName: string, container: HTMLElement, event: IEvents) {
@@ -39,17 +40,26 @@ export class Card extends Component<ICard> {
         this._image = container.querySelector(`.${blockName}__image`);
         this._price = container.querySelector(`.${blockName}__price`);
         this._category = container.querySelector(`.${blockName}__category`);
-        this._button = container.querySelector(`.card__button`);
+        this._button = container.querySelector(`.${blockName}__button`);
         this._itemNumber = container.querySelector(`.basket__item-index`);
+        this._deleteButton = container.querySelector(`.basket__item-delete`);
         this.event = event;
 
-        this.container.addEventListener('click', () => {
-            this.event.emit('card:selected', {id: this._id}) 
-        })
-        // console.log("card__button",this._button = container.querySelector(`.card__button`))
-        // this._button.addEventListener('click', () => {
-        //     this.event.emit('button:selected') 
-        // })
+        if(this._button){
+            this._button.addEventListener('click', () => {
+                this.event.emit('item:updateBasket', {id: this._id})
+            });
+        } 
+        
+        if (this._deleteButton) {
+            this._deleteButton.addEventListener('click', () => {
+                this.event.emit('item:rmFromBasket', {id: this._id})
+            });
+        } else {
+            this.container.addEventListener('click', () => {
+                this.event.emit('card:selected', {id: this._id}) 
+            })
+        }
     }
 
     set title(value: string) {
@@ -82,14 +92,6 @@ export class Card extends Component<ICard> {
         this._category.classList.add(`${this.blockName}__category_${value}`);
     }
 
-    set button(selected: boolean) {
-        if(selected) {
-            this.setText(this._button, 'Удалить')
-        } else {
-            this.setText(this._button, 'Добавить в корзину')
-        }
-    }
-
     set id(id){
         this._id = id;
     }
@@ -106,11 +108,19 @@ export class Card extends Component<ICard> {
         this._itemNumber.textContent = String(value);
     }
 
-    get button(): HTMLButtonElement {
+    get cardButton(): HTMLButtonElement {
         if(this._button){
             return this._button
+        } else {
+            console.log('error')
         }
         
+    }
+
+    set textButton(value: string) {
+        if (this._button) {
+            this.setText(this._button, value)
+        }
     }
 }
 
