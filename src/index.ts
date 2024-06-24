@@ -274,7 +274,8 @@ events.on(`contacts:submit`, () => {
 //ОЧИСТКА ЗАКАЗА И ЗАКРЫТИЕ МОДАЛЬНОГО ОКНА УСПЕШНОГО ЗАКАЗА
 events.on('order:created', () => {
     dataHandler.resetBasket();
-    modal.resetFormFields();
+    paymentAddressForm.clearAddressField();
+    contactsForm.clearContactsFormFields()
     modal.closeModalWindow();
 })
 

@@ -43,12 +43,6 @@ export class Modal extends Component<IModalWindow> {
         this.events.emit('modal:open');
     }
 
-    resetFormFields() {
-        if (this._content instanceof HTMLFormElement) {
-            this._content.reset();
-        }
-    }
-
     render(data: IModalWindow): HTMLElement {
         super.render(data);
         this.openModalWindow();
