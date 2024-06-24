@@ -18,8 +18,6 @@ export class SuccessOrder extends Component<OrderSuccessPopup> {
         } )
     }
 
-    
-
     set total(value: number) {
         this.setText(this._total, 'Списано' + ' ' + `${value}` + ' ' + 'синапсов') 
     }

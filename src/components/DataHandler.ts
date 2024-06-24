@@ -20,7 +20,7 @@ export class DataHandler extends Model<IDataHandler> {
 
     setProductList(items: IItem[]) {
         this.productList = items
-        this.emitChanges('itemsData:changed', { productList: this.productList}); //Метод emitChanges уведомляет всех подписчиков о том, что список продуктов был изменен, передавая новое значение productList
+        this.emitChanges('itemsData:changed', { productList: this.productList}); 
     }
 
     showOneItem(id: string) {
@@ -46,7 +46,7 @@ export class DataHandler extends Model<IDataHandler> {
         this.emitChanges('basketData:changed', this.basketList);
     }
 
-    resetOrder() {
+    resetOrder() { //очищает данные заказа после его успешного завершения
         this.order.payment = 'card';
         this.order.address = '';
         this.order.email = '';

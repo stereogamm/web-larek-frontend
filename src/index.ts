@@ -3,7 +3,6 @@ import { DataHandler } from './components/DataHandler';
 import { EventEmitter } from './components/base/events'
 import { AppApi} from './components/AppApi';
 import { API_URL, CDN_URL, options, colorSetting} from './utils/constants';
-import { Component } from './components/base/component';
 import { Page } from './components/Page'
 import { Card, ICard } from './components/Card';
 import { cloneTemplate, createElement, ensureElement } from './utils/utils';
@@ -144,18 +143,17 @@ events.on('item:addToBasket',  () => {
     if (!basketItems.find(item => {return item.id === preview.id})) {
         dataHandler.addItemtoBasket(preview);
         dataHandler.setPreview(preview.id)
-       
     }
-    
 })
 
 events.on('item:rmFromPreorder',  (data: {id: string}) => {
-    // const preview = dataHandler.getPreview();
     const basketItems = dataHandler.getBasketList();
     dataHandler.removeItemFromBasket(data.id)
+
+
+    // const preview = dataHandler.getPreview();
     // dataHandler.setPreview(preview.id)
     
-
     // if (basketItems.find(item => {return item.id === preview.id})) {
     //     dataHandler.removeItemFromBasket(preview.id)
     //     console.log("deliting")
@@ -183,13 +181,8 @@ events.on('item:rmFromPreorder',  (data: {id: string}) => {
     // modal.render({content: cardElement});
 }) 
 
-// //УДАЛЕНИЕ КАТОЧКИ ТОВАРА ИЗ КОРЗИНЫ ПРИ КЛИКЕ НА ИКОНКУ КОРЗИНЫ - TO DO!!!!
-// events.on('basketItem:delete', (data: {id: string}) => {
-//     dataHandler.removeItemFromBasket(data.id)
-// })
-
 //ИЗМЕНЕНИЕ СЧЕТЧИКА НА ГЛАВНОЙ
-events.on('basketData:changed', ()  => {
+events.on('basketData:changed', (newList: {basketList: IItem[]})  => {
     const counterData = dataHandler.getCountBasketItems();
     page.render({
         counter: counterData
@@ -318,6 +311,4 @@ events.on('modal:close', () => {
 
 //TO DO: 
 // 1 Удаление товара из корзины починить 
-// 2 Документация + описание классов - обновить
-// 3 добавить очищение полей при закрытии модального  окна
-// 4 добавить комменты к коду
+

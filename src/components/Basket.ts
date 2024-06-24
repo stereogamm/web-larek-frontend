@@ -11,7 +11,7 @@ interface IBasket {
 export class Basket extends Component<IBasket> {
     protected _list: HTMLElement;
     protected _total: HTMLElement;
-    protected _button: HTMLElement;
+    protected _button: HTMLButtonElement;
   
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container);

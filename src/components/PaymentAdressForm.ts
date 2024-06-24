@@ -1,7 +1,6 @@
 import { Form } from './Forms';
 import { IEvents } from './base/events';
 import type { TOrderForm } from '../types/index';
-import { ensureElement } from '../utils/utils';
 
 
 export class PaymentAddressForm extends Form<TOrderForm> {

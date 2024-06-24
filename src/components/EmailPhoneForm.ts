@@ -12,10 +12,6 @@ export class ContactsForm extends Form<TOrderForm> {
         this._email = container.querySelector('input[name="phone"]');
         this._phone = container.querySelector('input[name="email"]');
 
-        
-
-        // this._email.addEventListener('input', () => this.events.emit('edit-email:input'));
-        // this._phone.addEventListener('input', () => this.events.emit('edit-phone:input'));
     }
 
     get phone(): string {

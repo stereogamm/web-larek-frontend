@@ -1,12 +1,9 @@
 import { IItem } from "../types";
 import { Component } from "./base/component";
 import { ensureElement } from "../utils/utils";
-import { IEvents, EventEmitter } from "./base/events"
+import { IEvents } from "./base/events"
 import { colorSetting } from "../utils/constants";
 
-// export interface ICardActions {
-//     onClick: (event: MouseEvent) => void;
-// }
 
 export interface ICard {
     title: string;
@@ -114,7 +111,6 @@ export class Card extends Component<ICard> {
         } else {
             console.log('error')
         }
-        
     }
 
     set textButton(value: string) {
