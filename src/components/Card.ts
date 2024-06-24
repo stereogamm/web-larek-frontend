@@ -42,6 +42,8 @@ export class Card extends Component<ICard> {
         this._deleteButton = container.querySelector(`.basket__item-delete`);
         this.event = event;
 
+
+    
         if(this._button){
             this._button.addEventListener('click', () => {
                 this.event.emit('item:updateBasket', {id: this._id})

@@ -147,38 +147,7 @@ events.on('item:addToBasket',  () => {
 })
 
 events.on('item:rmFromPreorder',  (data: {id: string}) => {
-    const basketItems = dataHandler.getBasketList();
     dataHandler.removeItemFromBasket(data.id)
-
-
-    // const preview = dataHandler.getPreview();
-    // dataHandler.setPreview(preview.id)
-    
-    // if (basketItems.find(item => {return item.id === preview.id})) {
-    //     dataHandler.removeItemFromBasket(preview.id)
-    //     console.log("deliting")
-    // }
-
-    // const card = new Card ('card', cloneTemplate(cardPreviewTemplate), events);
-    // const preview = dataHandler.getPreview();
-    // const basketItem = dataHandler.getBasketList(); 
-    
-    // if (!basketItem.find(item => {return item.id === preview.id})) {
-    //     card.textButton = 'В корзину'
-    // } else {
-    //     card.textButton = 'Удалить'
-    // }
-    
-    // const cardElement = card.render({
-    //     description: preview.description,
-    //     image: preview.image,
-    //     title: preview.title,
-    //     category: preview.category,
-    //     price: preview.price,
-    //     id: preview.id
-    // })
-
-    // modal.render({content: cardElement});
 }) 
 
 //ИЗМЕНЕНИЕ СЧЕТЧИКА НА ГЛАВНОЙ
@@ -309,6 +278,4 @@ events.on('modal:close', () => {
     page.locked = false;
 });
 
-//TO DO: 
-// 1 Удаление товара из корзины починить 
 
