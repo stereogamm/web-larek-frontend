@@ -56,21 +56,22 @@ export class Card extends Component<ICard> {
         //     });
         // }
 
-        if(this._button){
-            this._button.addEventListener('click', () => {
-                this.event.emit('item:updateBasket', {id: this._id})
-            });
-        } 
-        
-        if (this._deleteButton) {
-            this._deleteButton.addEventListener('click', () => {
-                this.event.emit('item:rmFromBasket', {id: this._id})
-            });
+        if (this._button) {
+            if (this._deleteButton) {
+                this._button.addEventListener('click', () => {
+                    this.event.emit('item:rmFromBasket', { id: this.id });
+                });
+            } else {
+                this._button.addEventListener('click', () => {
+                    this.event.emit('item:updateBasket', { id: this._id });
+                });
+            }
         } else {
             this.container.addEventListener('click', () => {
-                this.event.emit('card:selected', {id: this._id}) 
-            })
+                this.event.emit('card:selected', { id: this._id });
+            });
         }
+    
     }
 
     set title(value: string) {

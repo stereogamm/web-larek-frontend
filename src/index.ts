@@ -43,7 +43,6 @@ const basketComponent = new Basket(cloneTemplate(basket), events);
 api.getItems()
   .then((res) => {
     dataHandler.setProductList(res)
-    events.emit('Info: loaded')
   })
   .catch(err => {
     console.log(err)
@@ -107,7 +106,8 @@ events.on('basketIs:opened', (itemList: {basketList: IItem[]}) => {
           return basketCard.render({
             title: item.title,
             price: item.price,
-            itemNumber: index +1
+            itemNumber: index +1,
+            id: item.id
         })
     })
 
@@ -147,8 +147,6 @@ events.on('item:rmFromBasket',  (data: {id: string}) => {
     dataHandler.removeItemFromBasket(data.id)
 }) 
 
-
-
 //ИЗМЕНЕНИЕ СЧЕТЧИКА НА ГЛАВНОЙ
 events.on('basketData:changed', (newList: {basketList: IItem[]})  => {
     const counterData = dataHandler.getCountBasketItems();
@@ -160,7 +158,8 @@ events.on('basketData:changed', (newList: {basketList: IItem[]})  => {
           return basketCard.render({
             title: item.title,
             price: item.price,
-            itemNumber: index +1
+            itemNumber: index +1,
+            id: item.id
         })
     })
 

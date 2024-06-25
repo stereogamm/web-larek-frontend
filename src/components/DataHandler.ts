@@ -20,7 +20,7 @@ export class DataHandler extends Model<IDataHandler> {
 
     setProductList(items: IItem[]) {
         this.productList = items
-        this.emitChanges('itemsData:changed', { productList: this.productList}); 
+        this.emitChanges('Info: loaded', { productList: this.productList}); 
     }
 
     showOneItem(id: string) {
