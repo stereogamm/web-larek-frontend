@@ -42,19 +42,6 @@ export class Card extends Component<ICard> {
         this._deleteButton = container.querySelector(`.basket__item-delete`);
         this.event = event;
 
-        // if (this._button) {
-        //     this._button.addEventListener('click', () => {
-        //         this.event.emit('item:updateBasket', {id: this._id});
-        //     });
-        // } else if (this._deleteButton) {
-        //     this._deleteButton.addEventListener('click', () => {
-        //         this.event.emit('item:rmFromBasket', {id: this._id});
-        //     });
-        // } else {
-        //     this.container.addEventListener('click', () => {
-        //         this.event.emit('card:selected', {id: this._id});
-        //     });
-        // }
 
         if (this._button) {
             if (this._deleteButton) {
@@ -71,7 +58,6 @@ export class Card extends Component<ICard> {
                 this.event.emit('card:selected', { id: this._id });
             });
         }
-    
     }
 
     set title(value: string) {
@@ -101,7 +87,8 @@ export class Card extends Component<ICard> {
     }
 
     categoryColor(value: string) {
-        this._category.classList.add(`${this.blockName}__category_${value}`);
+        const className = `${this.blockName}__category_${value}`;
+        this.toggleClass(this._category, className, true);
     }
 
     set id(id){
@@ -117,7 +104,7 @@ export class Card extends Component<ICard> {
     }
 
     set itemNumber(value: number) {
-        this._itemNumber.textContent = String(value);
+        this.setText(this._itemNumber, value.toString());
     }
 
     get cardButton(): HTMLButtonElement {

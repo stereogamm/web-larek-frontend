@@ -30,7 +30,7 @@ export class Modal extends Component<IModalWindow> {
     }
 
     closeModalWindow() {
-        this.container.classList.remove('modal_active');
+        this.toggleClass(this.container, 'modal_active', false);
         this.events.emit('modal:close');
     }
 
@@ -39,7 +39,7 @@ export class Modal extends Component<IModalWindow> {
     }
 
     openModalWindow() {
-        this.container.classList.add('modal_active');
+        this.toggleClass(this.container, 'modal_active', true);
         this.events.emit('modal:open');
     }
 
