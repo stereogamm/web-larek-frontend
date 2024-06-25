@@ -18,9 +18,6 @@ const events = new EventEmitter();
 
 const api = new AppApi(CDN_URL, API_URL, options);
 
-// ПОЛУЧЕНИЕ КАРТОЧЕК С СЕРВЕРА
-
-
 const gallery = document.querySelector('.gallery');
 
 const cardTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -146,9 +143,11 @@ events.on('item:addToBasket',  () => {
     }
 })
 
-events.on('item:rmFromPreorder',  (data: {id: string}) => {
+events.on('item:rmFromBasket',  (data: {id: string}) => {
     dataHandler.removeItemFromBasket(data.id)
 }) 
+
+
 
 //ИЗМЕНЕНИЕ СЧЕТЧИКА НА ГЛАВНОЙ
 events.on('basketData:changed', (newList: {basketList: IItem[]})  => {
@@ -277,5 +276,6 @@ events.on('modal:open', () => {
 events.on('modal:close', () => {
     page.locked = false;
 });
+
 
 

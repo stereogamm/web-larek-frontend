@@ -42,8 +42,20 @@ export class Card extends Component<ICard> {
         this._deleteButton = container.querySelector(`.basket__item-delete`);
         this.event = event;
 
+        // if (this._button) {
+        //     this._button.addEventListener('click', () => {
+        //         this.event.emit('item:updateBasket', {id: this._id});
+        //     });
+        // } else if (this._deleteButton) {
+        //     this._deleteButton.addEventListener('click', () => {
+        //         this.event.emit('item:rmFromBasket', {id: this._id});
+        //     });
+        // } else {
+        //     this.container.addEventListener('click', () => {
+        //         this.event.emit('card:selected', {id: this._id});
+        //     });
+        // }
 
-    
         if(this._button){
             this._button.addEventListener('click', () => {
                 this.event.emit('item:updateBasket', {id: this._id})
