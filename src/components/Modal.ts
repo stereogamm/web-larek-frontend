@@ -22,15 +22,26 @@ export class Modal extends Component<IModalWindow> {
         this._closeButton.addEventListener('click', this.closeModalWindow.bind(this));
         this._content.addEventListener('click', (event) => event.stopPropagation());
         this.container.addEventListener('click', this.closeModalWindow.bind(this));
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                this.closeModalWindow();
-            }
-        });
     }
 
+    // создаем метод для переключения модального окна, чтобы не передавать селектор и контейнер каждый раз
+    // сразу по умолчанию указываем `true`, чтобы лишний раз не передавать при открытии
+   _toggleModal(state: boolean = true) {
+    this.toggleClass(this.container, 'modal_active', state);
+}
+
+    // Обработчик в виде стрелочного метода, чтобы не терять контекст `this`
+    _handleEscape = (evt: KeyboardEvent) => {
+        if (evt.key === 'Escape') {
+            this.closeModalWindow();
+    }
+};
+
     closeModalWindow() {
-        this.toggleClass(this.container, 'modal_active', false);
+        this._toggleModal(false); // закрываем
+        // правильно удаляем обработчик при закрытии
+        document.removeEventListener('keydown', this._handleEscape);
+        this.content = null;
         this.events.emit('modal:close');
     }
 
@@ -38,8 +49,10 @@ export class Modal extends Component<IModalWindow> {
         this._content.replaceChildren(value);
     }
 
-    openModalWindow() {
-        this.toggleClass(this.container, 'modal_active', true);
+    openModalWindow(){
+        this._toggleModal(); // открываем
+        // навешиваем обработчик при открытии
+        document.addEventListener('keydown', this._handleEscape);
         this.events.emit('modal:open');
     }
 
