@@ -1,50 +1,66 @@
-# Проектная работа "Веб-ларек"
+# Project "Vibe market: come in, grab it, you won't regret it" 🛒 
 
-Стек: HTML, SCSS, TS, Webpack
+💡
+This is a web application for managing a product catalog and shopping cart. The user can browse products, add them to the cart, and place orders. The project is built using the OOP paradigm.
 
-Структура проекта:
-- src/ — исходные файлы проекта
-- src/components/ — папка с JS компонентами 
-- src/components/base/ — папка с базовым кодом
+---
 
-Важные файлы:
-- src/pages/index.html — HTML-файл главной страницы
-- src/types/index.ts — файл с типами
-- src/index.ts — точка входа приложения
-- src/scss/styles.scss — корневой файл стилей 
-- src/utils/constants.ts — файл с константами
-- src/utils/utils.ts — файл с утилитами
+🛠️ Tech Stack\
+✳️ JS\
+✳️ TypeScript\
+✳️ HTML\
+✳️ SCSS\
+✳️ Webpack\
 
-## Установка и запуск
-Для установки и запуска проекта необходимо выполнить команды
+🏗 Project Architecture
+- MVP (Model-View-Presenter) — separation of application logic:\
+- Model — data management\
+- View — information display\
+- Presenter — connects Model and View\
+
+🔦 Project structure:
+- src/ — source files of the project
+- src/components/ — folder with JS components
+- src/components/base/ — folder with base code
+
+🔦 Important files:
+- src/pages/index.html — HTML file of the main page
+- src/types/index.ts — file with types
+- src/index.ts — application entry point
+- src/scss/styles.scss — root styles file
+- src/utils/constants.ts — file with constants
+- src/utils/utils.ts — file with utilities
+
+## Installation and launch 🛠️
+To install and run the project, execute the commands
 
 ```
 npm install
 npm run start
 ```
 
-или
+or
 
 ```
 yarn
 yarn start
 ```
-## Сборка
+## Build
 
 ```
 npm run build
 ```
 
-или
+or
 
 ```
 yarn build
 ```
 
-# Описание интерфейсов данных и типов данных, используемых в приложении
+# Description of data interfaces and data types used in the application 
 ```
 
-интерфейс для данных товара
+interface for product data
 export interface IItem {
     category: string;
     title: string;
@@ -56,23 +72,23 @@ export interface IItem {
 ```
 ```
 
-интерфейс состояния приложения 
+interface for application state
 export interface IDataHandler {
     productList: IItem[];
     basket: IItem[];
     order: IOrder;
-    preview: string; id открытой карточки
-    saveProductList(items : IItem[]): void;  сохранение списка продуктов, полученных с сервера
-    addItemToBasket(item: string, payload: Function | null): void;  добавляем товар по id в корзину
-    deleteItemFromBasket(item: string, payload: Function | null): void;  удаляем товар по id из корзины
-    resetBasket(): void;  очищение данных после успешного заказа
-    showOneItem(items: IItem[], id: string): object;  открываем карточку для просмотра по id 
-    getTotalSum(): number; общая сумма товаров в корзине/общая стоимость заказа
+    preview: string; id of the opened card
+    saveProductList(items : IItem[]): void; save the product list received from the server
+    addItemToBasket(item: string, payload: Function | null): void; add product by id to the basket
+    deleteItemFromBasket(item: string, payload: Function | null): void; remove product by id from the basket
+    resetBasket(): void; clear data after a successful order
+    showOneItem(items: IItem[], id: string): object; open card for viewing by id
+    getTotalSum(): number; total sum of products in the basket/total order cost
 }
 ```
 ```
 
-интерфейс для данных заказа
+interface for order data
 interface IOrder {
     email: string;
     phone: string;
@@ -83,7 +99,7 @@ interface IOrder {
 }
 ```
 ```
-интерфейс экземпляра класса Card
+interface for Card class instance
 interface ICard {
     title: string;
     description?: string;
@@ -97,39 +113,39 @@ interface ICard {
 ```
 ```
 
-интерфейс корзины товаров
+interface for basket
 interface IBacket {
     items: IItem[];
     total: number | null;
-    resetBasket(): void; очищение данных после успешного заказа
+    resetBasket(): void; clear data after a successful order
 }
 ```
 ```
 
-интерфейс результата заказа 
+interface for order result
 export interface IOrderResult {
     id: string;
-    total: number | null; 
+    total: number | null;
 }
 ```
 ```
 
-интерфейс для валидации ошибок 
+interface for error validation
 export type IFormErrors = Partial<Record<keyof IOrder, string>>;
 ```
 ```
 
-интерфейс полей формы 
+interface for form fields
 export type TOrderForm = Pick<IOrder,  'address' | 'payment' | 'email' | 'phone'>
 ```
 ```
 
-тип данных для модального окна успешного завершения заказа
+data type for successful order modal window
 export type OrderSuccessPopup = Pick<IOrder, 'total'>;
 ```
 ```
 
-интерфейс экземпляра класса Api
+interface for Api class instance
 interface IApi {
     getItems: () => Promise<IItem[]>;
     createOrder: (order: IOrder) => Promise<IOrderResult>;
@@ -137,7 +153,7 @@ interface IApi {
 ```
 ```
 
-типы для экземпляра класса эвент эмиттера
+types for event emitter class instance
 type EventName = string | RegExp;
 type Subscriber = Function;
 type EmitterEvent = {
@@ -145,16 +161,14 @@ type EmitterEvent = {
     data: unknown
 }
 ```
-
 ```
 
-интерфейс экземпляра класса корзины
+interface for basket class instance
 interface IBasket {
     items: HTMLElement[];
     total: number;
 }
 ```
-
 ```
 
 IInputsValidate {
@@ -162,10 +176,9 @@ IInputsValidate {
     errors: string[];
 }
 ```
-
 ```
 
-интерфейс экземпляра класса страницы
+interface for page class instance
 IPage {
     counter: number;
     catalog: HTMLElement[];
@@ -173,81 +186,78 @@ IPage {
 }
 ```
 
+# Application Architecture 💡
 
-# Архитектура приложения
+## The application implements layer separation in the MVP paradigm 
 
-## Приложение реализует разделение на слои в парадигме MVP 
+- *Data layer* - responsible for storing and working with data - `Models`
+- *View layer* - responsible for displaying data on the page - `View`
+- *Binding layer* with access to models and views - `Presenter`
 
-- *Слой данных* - отвечает за хранение и работу с данными - `Models`
-- *Слой отображения* - отвечает за отображение данных на странице - `View`
-- *Связующий слой* с доступом к моделям и вью - `Presenter` 
+# Base Code 💡
 
-# Базовый код
+### Base class `Api` ✅
 
-### Базовый класс `Api`
+Implements logic for working with the server. Contains a constructor to create an object with base URL properties and request headers.
 
- Реализует логику работы с сервером. Содержит конструктор для создания объекта со свойствами базового url адреса и хэдеров запроса.
+- `constructor(baseUrl: string, options: RequestInit = {})`- takes a base URL and global options for all requests (optional).
 
-- `constructor(baseUrl: string, options: RequestInit = {})`- принимает базовый URL и глобальные опции для всех запросов(опционально).
+Also contains `get` and `post` methods, which handle request formation and asynchronous sending, calling the protected method `handleResponse`. The `handleResponse` method asynchronously converts the server response to json format in case of success and returns it, in case of failure - returns the statusText field value.  
 
- Также содержит `get` и `post` методы, которые отвечают за формирование и асинхронную отправку запроса и вызов защищенного метода `handleResponse`. Метод `handleResponse` асинхронно преобразовывает ответ сервера в формат json в случае успеха и возвращает его, в случае неуспеха - возвращает значение поля statusText  
+### Base class `Component` ✅
 
+Represents an `abstract` base class for creating components that work with DOM elements. It provides several methods for managing elements on the page. Subclasses can use these methods to manage DOM elements.
 
- ### Базовый класс `Component`
+Constructor takes container and saves it. The constructor is protected, meaning instances of this class cannot be created directly, but it can be called from subclasses.
 
- Представляет собой `абстрактный` базовый класс для создания компонентов, которые работают с DOM-элементами. Он предоставляет ряд методов для управления элементами на странице. Подклассы могут использовать методы этого класса для управления элементами DOM.
+An HTML element is passed to the constructor and saved in the private field container. This allows child classes to work with this element.
 
- Конструктор принимает container и сохраняет его. Конструктор  защищен, что означает, что нельзя создавать экземпляры этого класса напрямую, но его можно вызывать из подклассов.
+Contains methods:
 
- HTML элемент передается в конструктор и сохраняется в приватном поле container. Это позволяет дочерним классам работать с этим элементом.
+- `toggleClass` Method to toggle a class on an element. Uses classList.toggle to add or remove a class depending on the force value.
+- `setText` Sets the text content of an element. Converts value to string and assigns it to textContent.
+- `setDisabled` Sets or removes the disabled attribute of an element depending on the state value.
+- `setHidden` Hides the element by setting its display style to none.
+- `setVisible` Shows the element by removing the display property.
+- `setImage` Sets the image source and alt text.
+- `render` Updates the instance data by copying properties from data to the current object using Object.assign. Then returns the container.
 
- Содержит методы: 
+### Base class `EventEmitter` ✅
 
-- `toggleClass` Метод для переключения класса у элемента. Использует classList.toggle для добавления или удаления класса в зависимости от значения force.
-- `setText` Устанавливает текстовое содержимое элемента. Преобразует value в строку и назначает его textContent.
-- `setDisabled` Устанавливает или снимает атрибут disabled у элемента в зависимости от значения state.
-- `setHidden`Скрывает элемент, устанавливая его стиль display в none.
-- `setVisible` Показывает элемент, удаляя свойство display.
-- `setImage` Устанавливает источник изображения и альтернативный текст.
-- `render` Обновляет данные экземпляра класса, копируя свойства из data в текущий объект с использованием Object.assign. Затем возвращает контейнер container.
-
-
-### Базовый класс  `EventEmitter`
-
-Класс представляет собой систему управления событиями, позволяющую добавлять, удалять и вызывать обработчики событий.\
-Конструктор создает пустой объект `Map`, который будет хранить события и их подписчиков.\
+This class is an event management system, allowing adding, removing, and calling event handlers.
+The constructor creates an empty `Map` object to store events and their subscribers.
 
 - `constructor()={}`
 
-Класс используется в презентере для обработки событий и в слоях приложения для генерации событий. 
-- Метод `on` - добавляет обработчик для конкретного события.
-- Метод `off` - удаляет обработчик для конкретного события.
-- Метод `emit` - вызывает все обработчики для указанного события, передавая им данные.
-- Метод `onAll` - добавляет обработчик, который будет вызываться для всех событий.
-- Метод `offAll` - удаляет все обработчики для всех событий.
-- Метод `trigger` - создает функцию-триггер, которая при вызове инициирует событие с указанным именем и данными.
+The class is used in the presenter for event handling and in application layers for generating events.
+- Method `on` - adds a handler for a specific event.
+- Method `off` - removes a handler for a specific event.
+- Method `emit` - calls all handlers for the specified event, passing them data.
+- Method `onAll` - adds a handler that will be called for all events.
+- Method `offAll` - removes all handlers for all events.
+- Method `trigger` - creates a trigger function that, when called, initiates an event with a specified name and data.
 
-### Базовый класс `Model`
+### Base class `Model` ✅
 
-Этот класс предоставляет основу для создания моделей, которые могут управлять событиями, облегчая работу с изменениями данных и их синхронизацией. Абстрактный класс не может быть непосредственно инстанцирован, и предполагается, что от него будут наследоваться другие классы.
+This class provides a foundation for creating models that can handle events, making it easier to manage data changes and synchronization. An abstract class cannot be instantiated directly, and it is intended to be extended by other classes.
 
-Содержит конструктор, принимающий объект data с частичными данными типа T и объект events, который отвечает за обработку событий.
+It contains a constructor that takes a `data` object with partial `T` type data and an `events` object responsible for event handling.
 
-- `Object.assign(this, data)` Метод используется для копирования всех перечисляемых свойств из объекта data в текущий экземпляр (this)
-- `emitChanges(event: string, payload?: object)` Метод, который уведомляет о том, что модель изменилась, вызывая событие.
+- `Object.assign(this, data)` This method is used to copy all enumerable properties from the `data` object into the current instance (`this`).
+- `emitChanges(event: string, payload?: object)` A method that notifies when the model has changed by triggering an event.
 
-# Слой данных
+# Data Layer 💡
 
-### класс `DataHandler`
+### Class `DataHandler` ✅
 
-Отвечает за данные и логику работы с данными товаров\
+Responsible for data and business logic related to products.
 
-Содержит поля:
-- `productList: IItem[]`  список объектов карточек для отображения на главной\
-- `basketList: IItem[]`   список объектов товаров корзины
-- `preview: IItem` объект открытой карточки для превью     
-- `total: number | null`  общая стоимость всех товаров
-- `order: IOrder` = { объект заказа\
+Contains the following fields:
+- `productList: IItem[]` A list of product card objects displayed on the main page.\
+- `basketList: IItem[]` A list of objects representing items in the shopping cart.
+- `preview: IItem` The currently opened product card for preview.
+- `total: number | null` The total cost of all items.
+- `order: IOrder` = { Order object\
         `email: ,\`
         `phone: ,\`
         `address: ,\`
@@ -255,226 +265,235 @@ IPage {
         `items: [,\`
         `total: \`
     };
-- `formErrors: IFormErrors = {}` объект ошибок валидации формы
+- `formErrors: IFormErrors = {}` An object containing form validation errors.
 
-Методы класса для взаимодействия с данными: 
+Class methods for interacting with data:
 
-- `setProductList(items: IItem[])` присваивает полученные с сервера данные в ProductList
-- `showOneItem(id: string)` возвращает объект открытой карточки для просмотра по id
-- `addItemtoBasket(item: IItem)` добавление товара в корзину
-- `removeItemFromBasket(id: string)` удаление товара из корзины
-- `resetBasket()` очищает корзину
-- `resetOrder()` очищает данные заказа после его успешного завершения
-- `getTotalSum()` рассчитывает общую сумму всех товаров 
-- `getCountBasketItems()` возвращает количество товаров в корзине для дальнейшего отображения счетчика на главной
-- `validationOrderInfoIsChecked()` проверка на заполненность полей данными о способе оплаты и адресе
-- `validationUserInfoIsChecked()` проверка на заполенность полей данными о емейле и телефоне
-- `setOrder()` добавление id продукта в поле заказа
-- `setPreview(id: string)`сохраняет в поле id открытой карточки
-- `getPreview()` получает id открытой карточки
-- `getBasketList()` получает список товаров корзины
-- `setPaymentType (value: string)` сохраняет выбранный тип оплаты
-- `get payment()` получает значение текущего способа оплаты
-- `set _total` перезаписывает общую сумму товаров
+- `setProductList(items: IItem[])` Assigns received data from the server to `productList`.
+- `showOneItem(id: string)` Returns the opened product card object for viewing by `id`.
+- `addItemToBasket(item: IItem)` Adds a product to the cart.
+- `removeItemFromBasket(id: string)` Removes a product from the cart.
+- `resetBasket()` Clears the cart.
+- `resetOrder()` Clears order data after successful completion.
+- `getTotalSum()` Calculates the total cost of all products.
+- `getCountBasketItems()` Returns the number of items in the cart for displaying the counter on the main page.
+- `validationOrderInfoIsChecked()` Checks if the payment method and address fields are filled.
+- `validationUserInfoIsChecked()` Checks if the email and phone fields are filled.
+- `setOrder()` Adds the product `id` to the order field.
+- `setPreview(id: string)` Saves the `id` of the opened product card.
+- `getPreview()` Retrieves the `id` of the opened product card.
+- `getBasketList()` Retrieves the list of cart items.
+- `setPaymentType(value: string)` Saves the selected payment type.
+- `get payment()` Retrieves the current payment method.
+- `set _total` Updates the total cost of products.
 
-# Слой представления 
+# Presentation Layer 💡
 
-Отвечает за отображение внутри DOM-элемента передаваемых в него данных
+Responsible for rendering the passed data inside a DOM element.
 
-### класс `Basket`
+### Class `Basket` ✅
 
-Класс Basket расширяет базовый класс Component и отвечает за отображение списка товаров корзины 
+The `Basket` class extends the base `Component` class and is responsible for displaying the shopping cart items.
 
-Содержит поля: 
-_list: HTMLElement; Список товаров в корзине\
-_total: HTMLElement; Общее количество товаров в корзине\
-_button:HTMLButtonElement;  Кнопка для оформления заказа\
+Contains the following fields:
+- `_list: HTMLElement;` The list of items in the cart.\
+- `_total: HTMLElement;` The total number of items in the cart.\
+- `_button: HTMLButtonElement;` The button for placing an order.\
 
-Конструктор принимает HTMLElement и экземпляр класса эвент эмиттера
+The constructor takes an `HTMLElement` and an instance of an event emitter.
 
-Методы класса: 
+Class methods:
 
-- `set items(items: HTMLElement[])` Устанавливает товары в корзине, заменяет содержимое списка товаров новыми элементами или сообщением об отсутствии товаров в корзине
-- `set total(total: number)`  устанавливает общую сумму заказа 
+- `set items(items: HTMLElement[])` Sets the items in the cart, replacing the list contents with new elements or a message indicating no items in the cart.
+- `set total(total: number)` Sets the total order amount.
 
-### класс `Card` 
+### Class `Card` ✅
 
-Отвечает за работу с данными для карточки товаров, расширяет базовый класс Component
+Handles product card data and extends the base `Component` class.
 
-Конструктор принимает название блока, контейнер и эклемпляр класса эвент эмиттера
+The constructor takes the block name, container, and an event emitter instance.
 
-Методы класса: 
+Class methods:
 
-- `set title(value: string)` устанавливает текст заголовка
-- `set description(value: string)`  устанавливает текст описания
-- `set image(value: string) `устанавливает URL изображения.
-- `set price(value: number | null)` устанавливает цену. Если цена равна null, кнопка действия блокируется, и текст цены устанавливается в "Бесценно"
-- `set category(value: string)` устанавливает категорию товара и добавляет соответствующий CSS класс
-- `set id(id: string)` устанавливает идентификатор товара
-- `set itemNumber(value: number) `устанавливает номер товара в корзине
-- `set textButton(value: string)` устанавливает текст кнопки действия
-- `get id()` возвращает идентификатор товара
-- `get title()` возвращает текст заголовка товара
-- `get cardButton()` возвращает кнопку действия, если она существует
+- `set title(value: string)` Sets the title text.
+- `set description(value: string)` Sets the description text.
+- `set image(value: string)` Sets the image URL.
+- `set price(value: number | null)` Sets the price. If the price is `null`, the action button is disabled, and the price text is set to "Priceless."
+- `set category(value: string)` Sets the product category and adds the corresponding CSS class.
+- `set id(id: string)` Sets the product identifier.
+- `set itemNumber(value: number)` Sets the product number in the cart.
+- `set textButton(value: string)` Sets the action button text.
+- `get id()` Returns the product identifier.
+- `get title()` Returns the product title text.
+- `get cardButton()` Returns the action button if it exists.
 
-### класс `ContactsForm` 
+### Class `ContactsForm` ✅
 
-Класс наследуется от базового класса Form и предназначен для работы с формой контактных данных. Класс включает методы для управления значениями полей электронной почты и телефона, а также для их очистки.
-
-constructor(protected container: HTMLFormElement, protected events: IEvents)
-
-Вызывает конструктор базового класса Form, передавая контейнер формы и объект событий\
-Инициализирует поля _email и _phone для хранения ссылок на соответствующие элементы ввода в форме\
-
-Методы класса: 
-
-- `get phone(): string `возвращает текущее значение поля телефона
-- `set phone(value: string)` устанавливает новое значение для поля телефона
-- `get email(): string` возвращает текущее значение поля электронной почты
-- `set email(value: string)` устанавливает новое значение для поля электронной почты
-- `clearContactsFormFields()` очищает значения полей телефона и электронной почты, устанавливая их пустыми строками
-
-
-### класс `Form`
-
-Класс наследуется от базового класса Component. Этот класс предназначен для управления формой и включает методы для обработки изменений ввода, управления состоянием формы и вывода ошибок.
+This class extends the base `Form` class and is designed to handle the contact details form. It includes methods for managing the values of email and phone fields and clearing them.
 
 constructor(protected container: HTMLFormElement, protected events: IEvents)
 
-Конструктор принимает элемент формы и экземпляр эвент эмиттера\
-Вызывает конструктор базового класса Component\
-Инициализирует элементы _submit и _errors для хранения ссылки на кнопку отправки и контейнер ошибок в форме\
-Добавляет обработчики событий для ввода и отправки формы\
+Calls the base `Form` class constructor, passing the form container and the event object.\
+Initializes `_email` and `_phone` fields for storing references to the corresponding input elements in the form.\
 
-Методы класса: 
+Class methods:
 
-- `protected onInputChange(field: keyof T, value: string)` вызывается при изменении ввода в форме, генерирует событие с именем в формате formName.fieldName:change, передавая измененное поле и его значение
-- `set valid(isValid: boolean)` встанавливает состояние кнопки отправки (активна или неактивна) в зависимости от значения isValid
-- `set errors(value: string)` устанавливает текстовое содержимое элемента ошибок
-- `render(state: Partial<T> & IInputsValidate)` рендерит состояние формы, вызывает метод render базового класса Component и обновляет текущий объект значениями из state
+- `get phone(): string` Returns the current phone field value.
+- `set phone(value: string)` Sets a new phone field value.
+- `get email(): string` Returns the current email field value.
+- `set email(value: string)` Sets a new email field value.
+- `clearContactsFormFields()` Clears the phone and email field values, setting them to empty strings.
 
-### класс `Modal`
+### Class `Form` ✅
 
-Класс наследуется от базового класса Component и предназначен для управления модальными окнами, включая их открытие, закрытие и изменение содержимого.
+This class extends the base `Component` class. It is designed to manage a form and includes methods for handling input changes, managing form state, and displaying errors.
 
-constructor(container: HTMLElement, protected events?: IEvents) 
+constructor(protected container: HTMLFormElement, protected events: IEvents)
 
-Конструктор принимает элемент модального окна и экземпляр эвент эмиттера
+The constructor takes a form element and an event emitter instance.\
+Calls the base `Component` class constructor.\
+Initializes `_submit` and `_errors` elements for storing references to the submit button and the error container in the form.\
+Adds event handlers for input changes and form submission.\
 
-Вызывает конструктор базового класса Component. Инициализирует элементы _content и _closeButton для хранения ссылки на содержимое модального окна и кнопку закрытия. Добавляет обработчики событий для закрытия модального окна при клике на кнопку закрытия, на контейнер модального окна (если клик был вне содержимого), и нажатии клавиши Escape.
+Class methods:
 
-Методы класса: 
+- `protected onInputChange(field: keyof T, value: string)` Called when an input field in the form changes. It triggers an event with the name formatted as `formName.fieldName:change`, passing the changed field and its value.
+- `set valid(isValid: boolean)` Sets the submit button state (enabled or disabled) based on `isValid`.
+- `set errors(value: string)` Sets the text content of the error element.
+- `render(state: Partial<T> & IInputsValidate)` Renders the form state, calls the base `Component` class `render` method, and updates the current object with values from `state`.
 
-- `closeModalWindow()` Удаляет класс modal_active с контейнера, скрывая модальное окно
-- `set content(value: HTMLElement)` Заменяет содержимое _content новым значением value
-- `openModalWindow()` Добавляет класс modal_active к контейнеру, показывая модальное окно
-- `render(data: IModalWindow): HTMLElement` отвечает за рендер 
+### Class `Modal` ✅
 
-### класс `Page`
+This class extends the base `Component` class and is designed for managing modal windows, including opening, closing, and changing their content.
 
-Класс наследуется от базового класса Component и управляет элементами на странице, такими как счетчик корзины, каталог товаров, обертка страницы и корзина\
+constructor(container: HTMLElement, protected events?: IEvents)
+
+The constructor takes a modal window element and an event emitter instance.\
+Calls the base `Component` class constructor.\
+Initializes `_content` and `_closeButton` elements for storing references to the modal content and the close button.\
+Adds event handlers for closing the modal window when clicking the close button, clicking outside the content, or pressing the Escape key.\
+
+Class methods:
+
+- `closeModalWindow()` Removes the `modal_active` class from the container, hiding the modal window.
+- `set content(value: HTMLElement)` Replaces the `_content` with the new value.
+- `openModalWindow()` Adds the `modal_active` class to the container, displaying the modal window.
+- `render(data: IModalWindow): HTMLElement` Responsible for rendering.
+
+### Class `Page` ✅
+
+This class extends the base `Component` class and manages page elements such as the cart counter, product catalog, page wrapper, and cart.\
 
 constructor(container: HTMLElement, protected events: IEvents)
 
-Конструктор принимает элемент и экземпляр эвент эмиттера, вызывает конструктор базового класса Component.
-Инициализирует элементы _counter, _catalog, _wrapper и _basket, которые представляют счетчик корзины, каталог товаров, обертку страницы и корзину соответственно. Добавляет обработчик событий для элемента _basket, который при клике генерирует событие basketIs:opened
+The constructor takes an element and an event emitter instance, calling the base `Component` class constructor.\
+Initializes `_counter`, `_catalog`, `_wrapper`, and `_basket`, representing the cart counter, product catalog, page wrapper, and cart respectively.\
+Adds an event handler for `_basket`, triggering the `basketIs:opened` event when clicked.\
 
-Методы класса: 
+Class methods:
 
-- `set catalog(items: HTMLElement[])` Заменяет содержимое элемента _catalog новыми элементами из массива items
-- `set counter(value: number)` устанавливает значение элемента счктчика
-- `set locked(value: boolean)` добавляет или удаляет класс page__wrapper_locked для элемента _wrapper в зависимости от значения value, блокируя страницу
+- `set catalog(items: HTMLElement[])` Replaces `_catalog` contents with new items.
+- `set counter(value: number)` Sets the counter value.
+- `set locked(value: boolean)` Adds or removes the `page__wrapper_locked` class from `_wrapper`, locking the page.
 
+### Class `PaymentAddressForm` ✅
 
-### класс `PaymentAddressForm`
+The class extends the functionality of the base `Form` class to manage a form for selecting a payment method and entering an address. This class includes event handling for payment selection buttons and the address input field, as well as methods for toggling and styling the buttons.\
 
-Класс расширяет функциональность базового класса Form для управления формой с выбором способа оплаты и вводом адреса. Этот класс включает обработку событий для кнопок выбора способа оплаты и поля ввода адреса, а также методы для переключения и стилизации кнопок.\
+#### `constructor(protected container: HTMLFormElement, protected events: IEvents)`
 
-constructor(protected container: HTMLFormElement, protected events: IEvents)\
+The constructor takes an element and an event emitter instance. It calls the constructor of the base `Form` class. It initializes the `_card`, `_cash`, and `_address` elements, representing the buttons for selecting card and cash payments, as well as the address input field. It adds event handlers for the `_card` and `_cash` buttons, which switch the payment method on click. It also adds an event handler for the `_address` field that emits an event when text is entered.\
 
-Конструктор принимает элемент и экземпляр эвент эмиттера. Вызывает конструктор базового класса Form. Инициализирует элементы _card, _cash и _address, представляющие кнопки для выбора оплаты картой и наличными, а также поле для ввода адреса. Добавляет обработчики событий для кнопок _card и _cash, которые переключают способ оплаты при клике. Добавляет обработчик события для поля _address, который генерирует событие при вводе текста\
+#### Class methods:
 
-Методы класса: 
+- `toggleCashPayment(value: boolean)` - Toggles the `button_alt-active` class for the `_cash` button based on the `value`.
+- `toggleCardPayment(value: boolean)` - Toggles the `button_alt-active` class for the `_card` button based on the `value`.
+- `paymentSwitch(payment: string)` - Determines which payment method is selected, toggles the appropriate classes for `_card` and `_cash` buttons, and emits either the `paymentOnLine:selected` or `paymentCash:selected` event depending on the chosen method.
+- `clearAddressField()` - Clears the `_address` field value.
 
-- `toggleCashPayment(value: boolean)` Переключает класс button_alt-active для кнопки _cash в зависимости от значения value
-- `toggleCardPayment(value: boolean)` Переключает класс button_alt-active для кнопки _card в зависимости от значения value
-- `paymentSwitch(payment: string)` Определяет, какой способ оплаты выбран, и переключает соответствующие классы для кнопок _card и _cash и генерирует события paymentOnLine:selected или paymentCash:selected в зависимости от выбранного способа оплаты
-- `clearAddressField()` Очищает значение поля _address
+---
 
-### класс `SuccessOrder`
+### Class `SuccessOrder` ✅
 
-Класс представляет собой компонент для отображения информации об успешно созданном заказе. Он расширяет функциональность базового класса Component и добавляет логику для отображения общей суммы заказа и закрытия попапа\ 
+The class represents a component for displaying information about a successfully placed order. It extends the functionality of the base `Component` class and adds logic for displaying the total order amount and closing the popup.\
 
-constructor(container: HTMLElement, protected events: IEvents)\
+#### `constructor(container: HTMLElement, protected events: IEvents)`
 
-Конструктор принимает элемент и экземпляр эвент эмиттера. Вызывает конструктор базового класса Component с переданным контейнером. Инициализирует элементы _total и _close через функцию ensureElement, чтобы убедиться, что они присутствуют в DOM. Добавляет обработчик события клика на кнопку _close, который генерирует событие order:created через объект events.\
+The constructor takes an element and an event emitter instance. It calls the constructor of the base `Component` class with the provided container. It initializes the `_total` and `_close` elements using the `ensureElement` function to ensure they exist in the DOM. It adds a click event handler to the `_close` button, which emits the `order:created` event via the `events` object.\
 
-Метод класса: 
-- `set total(value: number)` Устанавливает текстовое содержимое элемента _total с указанием общей суммы заказа, переданной в параметре value\
+#### Class method:
 
+- `set total(value: number)` - Sets the text content of the `_total` element, displaying the total order amount passed in the `value` parameter.
 
-### класс `AppApi`
+---
 
-Наследуется от базового класса Api и реализует интерфейс IApi. Класс AppApi предназначен для взаимодействия с API и содержит методы для получения списка элементов и создания заказа.
+### Class `AppApi` ✅
 
-- `getItems` Возвращает промис, который разрешается в массив объектов типа IItem
-- `createOrder` Принимает объект типа IOrder и возвращает промис, который разрешается в объект типа IOrderResult
+This class extends the base `Api` class and implements the `IApi` interface. `AppApi` is designed for interacting with the API and includes methods for retrieving a list of items and creating an order.
 
-Конструктор принимает:
-- `cdn` cтрока, представляющая URL до контента CDN 
-- `baseUrl` Базовый URL для API
-- `options` Опциональные настройки для запросов
+#### Methods:
 
-Конструктор вызывает конструктор родительского класса Api, передавая baseUrl и options, и инициализирует поле cdn.
+- `getItems` - Returns a promise that resolves to an array of `IItem` objects.
+- `createOrder` - Accepts an `IOrder` object and returns a promise that resolves to an `IOrderResult` object.
 
-Методы класса: 
+#### Constructor parameters:
 
-- `getItems` - Отправляет GET-запрос на путь /product/ и обрабатывает полученные данные. Возвращает промис, который разрешается в массив объектов типа IItem. Каждому элементу массива добавляется полный URL до изображения, используя свойство cdn
-- `createOrder` - Отправляет POST-запрос с данными заказа на путь /order и возвращает промис, который разрешается в объект типа IOrderResult.
+- `cdn` - A string representing the CDN content URL.
+- `baseUrl` - The base URL for the API.
+- `options` - Optional settings for requests.
 
+The constructor calls the parent `Api` class constructor, passing `baseUrl` and `options`, and initializes the `cdn` field.
 
-# Коммуникационный слой
+#### Class methods:
 
-Отвечает за взаимодействие с сервером\
-Все взаимодействие строится на работе с событиями
+- `getItems` - Sends a `GET` request to `/product/` and processes the received data. Returns a promise that resolves to an array of `IItem` objects. Each item in the array receives a full image URL using the `cdn` property.
+- `createOrder` - Sends a `POST` request with order data to the `/order` endpoint and returns a promise that resolves to an `IOrderResult` object.
 
-получаем данные -> генерируем события -> выполняем действия\
-данные в модели изменяются -> генерируем событие -> выполняем действия
+---
 
+## Communication Layer 🫱🏻‍🫲🏽 
 
-## Взаимодействие компонентов
+This layer is responsible for server interaction.\
+All interactions are event-driven.
 
-Код, описывающий взаимодействие слоя представления и слоя данных между собой находится в файле `index.ts`, выполняющем роль презентера.\
-Взаимодействие осуществляется за счет событий генерируемых с помощью брокера событий и обработчиков этих событий, описанных в `index.ts`\
-В `index.ts` сначала создаются экземпляры всех необходимых классов, а затем настраивается обработка событий.
+1. **Fetching data → Generating events → Performing actions**\
+2. **Data in the model changes → Event is generated → Actions are performed**
 
-*Список всех событий, которые могут генерироваться в системе:*\
-*События изменения данных (генерируются классами моделями данных)*
+---
 
-- `itemsData:changed` - изменение массива карточек
-- `itemsData:selected` - изменение открываемой в модальном окне карточки
-- `basketData:changed` - изменение данных в корзине товаров
-- `userData:changed` - изменение данных пользователя при заполнении формы
-- `datapaymentform:opened` - добавление id продукта в поле заказа
-- `order:ready` - формирование данных для заказа
-- `preview:changed` - изменение данных в поле preview
-- `paymentType:buttonSelected` - изменилось значение поля payment
-- `Info: loaded` - произошла успешная загрузка серверных данных
-- `item:addToBasket` - добавление товара в список корзины
-- `item:rmFromPreorder` - удаление товара из списка корзины
-- `orderItems:added` - добавление id выбранных товаров в заказ
-- `paymentOnLine:selected` - выбран спосо оплаты картой
-- `paymentCash:selected` -  выбран способ оплаты наличными
-- `order:created` - успешный заказ
+## Component Interaction 💡
 
+The code describing the interaction between the view layer and the data layer is located in the `index.ts` file, which acts as a presenter.\
+Interaction is carried out using events generated by an event broker and event handlers described in `index.ts`.\
+In `index.ts`, instances of all necessary classes are first created, and then event handling is configured.
 
-*События, возникающие при взаимодействии пользователя с интерфейсом (генерируются классами, отвечающими за представление)
+### *List of all events that can be generated in the system:* 💡
 
-- `card:selected` - клик по карточке на главной
-- `basketIs:opened` - открытие модального окна со списком товаров при клике на иконку корзины на главной
-- `item:updateBasket` - добавление/удаление товара при клике на кнопку в превью карточки
-- `datapaymentform:opened` - открытие модального окна с формой оплаты
-- `contacts:submit` - отправка заказа
-- `formErrors:change` - событие валидации данных формы
-- `modal:open` - модальное окно открыто
-- `modal:close` - модальное окно закрыто
+#### *Data change events (generated by data model classes)* ✴️
+
+- `itemsData:changed` - Change in the array of item cards.
+- `itemsData:selected` - Change in the selected card displayed in a modal window.
+- `basketData:changed` - Change in cart data.
+- `userData:changed` - Change in user data when filling out the form.
+- `datapaymentform:opened` - Addition of a product ID to the order field.
+- `order:ready` - Formation of order data.
+- `preview:changed` - Change in preview field data.
+- `paymentType:buttonSelected` - Change in the `payment` field value.
+- `Info:loaded` - Successful server data loading.
+- `item:addToBasket` - Adding an item to the cart.
+- `item:rmFromPreorder` - Removing an item from the cart.
+- `orderItems:added` - Adding selected product IDs to the order.
+- `paymentOnLine:selected` - Card payment selected.
+- `paymentCash:selected` - Cash payment selected.
+- `order:created` - Order successfully placed.
+
+#### *User interaction events (generated by view-related classes)* ✴️
+
+- `card:selected` - Clicking on a card on the main page.
+- `basketIs:opened` - Opening the modal window with the product list by clicking the cart icon on the main page.
+- `item:updateBasket` - Adding/removing an item by clicking the button in the card preview.
+- `datapaymentform:opened` - Opening the modal window with the payment form.
+- `contacts:submit` - Submitting an order.
+- `formErrors:change` - Form data validation event.
+- `modal:open` - Modal window opened.
+- `modal:close` - Modal window closed.
