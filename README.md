@@ -1,5 +1,8 @@
 # Project "Vibe market: come in, grab it, you won't regret it" 🛒 
 
+[VIEW THIS PROJECT](https://vibe-market.vercel.app/)
+---
+
 💡
 This is a web application for managing a product catalog and shopping cart. The user can browse products, add them to the cart, and place orders. The project is built using the OOP paradigm.
 
